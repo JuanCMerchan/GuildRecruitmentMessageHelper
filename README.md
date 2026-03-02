@@ -1,0 +1,1 @@
+# guild_recruitment_message_helper
