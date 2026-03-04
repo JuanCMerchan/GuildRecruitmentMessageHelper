@@ -115,22 +115,29 @@ button.backgroundTexture:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
 button.backgroundTexture:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -3, 3)
 button.backgroundTexture:SetTexture("Interface/Icons/INV_Rareguildtabard")
 
+function button:ShowButtonInChannel(self)
+  local channelId = GetChannelName("2")
+  if channelId == 0 then
+    self:Hide()
+  else
+    self:Show()
+  end
+end
 
 button:SetScript("OnEvent", function(self, event, arg1)
   if event == "ADDON_LOADED" and arg1 == "GuildRecruitmentMessageHelper" then
-    self:SetPoint(GRMHDB.buttonPosition.point, GRMHDB.buttonPosition.relativeTo, GRMHDB.buttonPosition.relativePoint, GRMHDB.buttonPosition.xOffset, GRMHDB.buttonPosition.yOffset)
-    if GRMHDB.buttonShow then 
+    self:SetPoint(GRMHDB.buttonPosition.point, GRMHDB.buttonPosition.relativeTo, GRMHDB.buttonPosition.relativePoint,
+      GRMHDB.buttonPosition.xOffset, GRMHDB.buttonPosition.yOffset)
+    if GRMHDB.buttonShow then
+      self:ShowButtonInChannel()
       self:RegisterEvent("CHAT_MSG_CHANNEL_NOTICE")
+    else
+      self:Hide()
     end
     self:UnregisterEvent("ADDON_LOADED")
   end
   if event == "CHAT_MSG_CHANNEL_NOTICE" then
-    local channelId = GetChannelName("2")
-    if channelId == 0 then
-      self:Hide()
-    else
-      self:Show()
-    end
+    self:ShowButtonInChannel()
   end
 end)
 
@@ -140,7 +147,8 @@ end)
 
 button:SetScript("OnDragStop", function(self)
   self:StopMovingOrSizing()
-  GRMHDB.buttonPosition.point, GRMHDB.buttonPosition.relativeTo, GRMHDB.buttonPosition.relativePoint, GRMHDB.buttonPosition.xOffset, GRMHDB.buttonPosition.yOffset = self:GetPoint()
+  GRMHDB.buttonPosition.point, GRMHDB.buttonPosition.relativeTo, GRMHDB.buttonPosition.relativePoint, GRMHDB.buttonPosition.xOffset, GRMHDB.buttonPosition.yOffset =
+      self:GetPoint()
 end)
 
 button:SetScript("OnClick", function()
@@ -173,10 +181,7 @@ SlashCmdList["GRMH"] = function(msg)
       GRMHDB.buttonShow = true
       print("Recruitment button will show up if Trade channel is active")
       button:RegisterEvent("CHAT_MSG_CHANNEL_NOTICE")
-      local channelId = GetChannelName("2")
-      if channelId ~= 0 then
-        button:Show()
-    end
+      button:ShowButtonInChannel()
     end
   else
     print("/grmh edit - Edit your recruitment message")
