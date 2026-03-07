@@ -115,7 +115,7 @@ button.backgroundTexture:SetPoint("TOPLEFT", button, "TOPLEFT", 3, -3)
 button.backgroundTexture:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -3, 3)
 button.backgroundTexture:SetTexture("Interface/Icons/INV_Rareguildtabard")
 
-function button:ShowButtonInChannel(self)
+function button:ShowButtonInChannel()
   local channelId = GetChannelName("2")
   if channelId == 0 then
     self:Hide()
