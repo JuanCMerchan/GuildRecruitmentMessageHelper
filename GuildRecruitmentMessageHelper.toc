@@ -8,5 +8,7 @@
 ## SavedVariables:
 ## SavedVariablesPerCharacter: GRMHDB
 
-GuildRecruitmentMessageHelper.lua
-
+Init.lua
+EditFrame.lua
+Button.lua
+SlashCommands.lua
