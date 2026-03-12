@@ -2,7 +2,7 @@
 ## Title: GuildRecruitmentMessageHelper
 ## Notes: This addon gives you a clickable button in cities that posts your desired guild recruitment message.
 ## Author: Kashmire
-## Version: 1.0.2
+## Version: 1.0.3
 ## RequiredDeps:
 ## X-Curse-Project-ID: 1477067
 ## SavedVariables:

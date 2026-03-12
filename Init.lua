@@ -14,4 +14,4 @@ if not GRMHDB then
   }
 end
 
-print("Welcome to " .. addonName .. "!\nUse /grmh to see the commands available")
+print("Welcome to " .. addonName .. "!\nUse /grmh to see the commands available\nMove the button by dragging it with the RIGHT mouse button")
