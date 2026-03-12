@@ -61,6 +61,7 @@ editBox:SetTextInsets(10, 10, 10, 10)
 
 editBox.counter = editBox:CreateFontString(nil, "OVERLAY", "ChatFontNormal")
 editBox.counter:SetPoint("BOTTOMRIGHT", editBox, "BOTTOMRIGHT", -5, -5)
+local guildLink = "[Guild: Your guild name] "
 
 editBox:SetScript("OnEscapePressed", function(self)
   self:ClearFocus()
@@ -68,15 +69,24 @@ end)
 
 editBox:SetScript("OnEnterPressed", function(self)
   GRMHDB.recruitmentMessage = self:GetText()
-  print("Your message will be: \"[Guild Link]: " .. GRMHDB.recruitmentMessage .. "\"")
+  print("Your message will be: \"" .. guildLink .. GRMHDB.recruitmentMessage .. "\"")
   self:GetParent():Hide()
 end)
 
 editBox:SetScript("OnShow", function(self)
-  self:SetText(GRMHDB.recruitmentMessage)
-  local num = string.len(self:GetText())
-  local max = self:GetMaxLetters()
-  self.counter:SetText("(" .. num .. "/" .. max .. ")")
+  local clubId = C_Club.GetGuildClubId()
+  local club = ClubFinderGetCurrentClubListingInfo(clubId)
+  if club ~= nil then
+    guildLink = "[Guild: " .. club.name .. "] "
+    self:SetMaxLetters(255 - string.len(guildLink))
+    self:SetText(GRMHDB.recruitmentMessage)
+    local num = string.len(self:GetText())
+    local max = self:GetMaxLetters()
+    self.counter:SetText("(" .. num .. "/" .. max .. ")")
+  else
+    self:GetParent():Hide()
+    print("Open the guild tab at least once before editing the message!")
+  end
 end)
 
 editBox:SetScript("OnTextChanged", function(self, userInput)

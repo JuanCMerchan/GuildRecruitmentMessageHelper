@@ -6,11 +6,7 @@ local button = addonTable.button
 
 SlashCmdList["GRMH"] = function(msg)
   if msg == "edit" then
-    if editFrame:IsShown() then
-      editFrame:Hide()
-    else
-      editFrame:Show()
-    end
+    editFrame:Show()
   elseif msg == "show" then
     if GRMHDB.buttonShow then
       button:Hide()
